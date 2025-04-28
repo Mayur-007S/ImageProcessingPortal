@@ -7,47 +7,72 @@ document.addEventListener('DOMContentLoaded', function() {
         if (uploadSuccess) {
             // Enable encode form if image is uploaded
             encodeForm.classList.add('active');
+            // Enable encoding type select
+            const encodingTypeSelect = document.getElementById('encodingType');
+            if (encodingTypeSelect) {
+                encodingTypeSelect.disabled = false;
+            }
+            // Enable encode button
+            const encodeButton = document.getElementById('encodeButton');
+            if (encodeButton) {
+                encodeButton.disabled = true; // Still disabled until a type is selected
+            }
         } else {
             // Disable encode form if no image is uploaded
-            const submitButton = encodeForm.querySelector('button[type="submit"]');
-            const inputs = encodeForm.querySelectorAll('input, textarea, select');
+            const encodingTypeSelect = document.getElementById('encodingType');
+            const encodeButton = document.getElementById('encodeButton');
+            const allInputs = encodeForm.querySelectorAll('input, textarea, select');
             
-            if (submitButton) {
-                submitButton.disabled = true;
-                submitButton.title = "Please upload an image first";
+            if (encodingTypeSelect) {
+                encodingTypeSelect.disabled = true;
             }
             
-            inputs.forEach(input => {
+            if (encodeButton) {
+                encodeButton.disabled = true;
+                encodeButton.title = "Please upload an image first";
+            }
+            
+            allInputs.forEach(input => {
                 input.disabled = true;
             });
             
             // Add info message
             const infoMessage = document.createElement('div');
             infoMessage.className = 'alert info';
-            infoMessage.textContent = 'Please upload an image first before encoding a message.';
+            infoMessage.textContent = 'Please upload an image first before encoding data.';
+            
+            // Remove existing info message if present
+            const existingInfo = encodeForm.querySelector('.alert.info');
+            if (existingInfo) {
+                existingInfo.remove();
+            }
+            
             encodeForm.prepend(infoMessage);
         }
     }
     
-    // Message type selector logic
-    const messageTypeSelect = document.getElementById('messageType');
-    const messageInput = document.getElementById('message');
-    
-    if (messageTypeSelect && messageInput) {
-        messageTypeSelect.addEventListener('change', function() {
-            if (this.value === 'link') {
-                messageInput.placeholder = "Enter a URL (e.g., https://www.example.com)";
-                messageInput.pattern = "https?://.+";
-                messageInput.title = "Please enter a valid URL starting with http:// or https://";
-            } else {
-                messageInput.placeholder = "Enter your message to hide in the image";
-                messageInput.pattern = "";
-                messageInput.title = "";
-            }
+    // Function to show the appropriate encoding form
+    window.showEncodingForm = function() {
+        // Get all form divs
+        const encodingForms = document.querySelectorAll('.encoding-form');
+        const encodingType = document.getElementById('encodingType').value;
+        const encodeButton = document.getElementById('encodeButton');
+        
+        // Hide all forms first
+        encodingForms.forEach(form => {
+            form.style.display = 'none';
         });
         
-        // Trigger change event to set initial placeholder
-        messageTypeSelect.dispatchEvent(new Event('change'));
+        // Show the selected form if a type is selected
+        if (encodingType) {
+            const selectedForm = document.getElementById(encodingType + 'EncodingForm');
+            if (selectedForm) {
+                selectedForm.style.display = 'block';
+                encodeButton.disabled = false;
+            }
+        } else {
+            encodeButton.disabled = true;
+        }
     }
     
     // Form validation
@@ -75,19 +100,51 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (encodeForm) {
         encodeForm.addEventListener('submit', function(e) {
-            const messageInput = document.getElementById('message');
-            const messageType = document.getElementById('messageType').value;
+            const encodingType = document.getElementById('encodingType').value;
             
-            if (!messageInput.value.trim()) {
+            if (!encodingType) {
                 e.preventDefault();
-                alert('Please enter a message to encode.');
+                alert('Please select an encoding type.');
                 return false;
             }
             
-            if (messageType === 'link' && !messageInput.value.trim().match(/^https?:\/\/.+/)) {
-                e.preventDefault();
-                alert('Please enter a valid URL starting with http:// or https://');
-                return false;
+            // Validate based on encoding type
+            switch (encodingType) {
+                case 'text':
+                    const textMessage = document.getElementById('textMessage').value.trim();
+                    if (!textMessage) {
+                        e.preventDefault();
+                        alert('Please enter a text message to encode.');
+                        return false;
+                    }
+                    break;
+                    
+                case 'link':
+                    const linkUrl = document.getElementById('linkUrl').value.trim();
+                    if (!linkUrl) {
+                        e.preventDefault();
+                        alert('Please enter a URL to encode.');
+                        return false;
+                    }
+                    if (!linkUrl.match(/^https?:\/\/.+/)) {
+                        e.preventDefault();
+                        alert('Please enter a valid URL starting with http:// or https://');
+                        return false;
+                    }
+                    break;
+                    
+                case 'file':
+                case 'video':
+                case 'apk':
+                case 'malware':
+                    const fileInputId = encodingType + 'Upload';
+                    const fileInput = document.getElementById(fileInputId);
+                    if (!fileInput.files || fileInput.files.length === 0) {
+                        e.preventDefault();
+                        alert('Please select a file to encode.');
+                        return false;
+                    }
+                    break;
             }
         });
     }

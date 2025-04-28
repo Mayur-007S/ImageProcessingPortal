@@ -68,6 +68,7 @@ label {
 
 input[type="file"],
 input[type="text"],
+input[type="url"],
 select,
 textarea {
     width: 100%;
@@ -87,6 +88,36 @@ select:focus,
 textarea:focus {
     border-color: #3498db;
     outline: none;
+}
+
+/* Encoding forms styling */
+.encoding-form {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Alert variations */
+.alert.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.alert.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+/* Important text */
+.important {
+    font-weight: bold;
+    color: #e74c3c;
+    margin-top: 0.5rem;
 }
 
 /* Button Styles */

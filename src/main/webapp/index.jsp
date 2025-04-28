@@ -37,23 +37,74 @@
             </section>
             
             <section class="card">
-                <h2>Step 2: Encode Your Message</h2>
-                <form action="encode" method="post" id="encodeForm">
+                <h2>Step 2: Select Encoding Type</h2>
+                <form action="encode" method="post" id="encodeForm" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="messageType">Message Type:</label>
-                        <select id="messageType" name="messageType" required>
-                            <option value="text">Text</option>
-                            <option value="link">Link</option>
+                        <label for="encodingType">Encoding Type:</label>
+                        <select id="encodingType" name="encodingType" required onchange="showEncodingForm()">
+                            <option value="">-- Select Encoding Type --</option>
+                            <option value="text">Text Encoding</option>
+                            <option value="file">File Encoding</option>
+                            <option value="link">Link Encoding</option>
+                            <option value="video">Video Encoding</option>
+                            <option value="apk">APK Encoding</option>
+                            <option value="malware">Malware Encoding</option>
                         </select>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="message">Enter your message:</label>
-                        <textarea id="message" name="message" rows="4" required></textarea>
+                    <!-- Text Encoding Form -->
+                    <div id="textEncodingForm" class="encoding-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="textMessage">Enter your text message:</label>
+                            <textarea id="textMessage" name="textMessage" rows="4"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- File Encoding Form -->
+                    <div id="fileEncodingForm" class="encoding-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="fileUpload">Select a file to encode:</label>
+                            <input type="file" id="fileUpload" name="fileUpload">
+                        </div>
+                    </div>
+                    
+                    <!-- Link Encoding Form -->
+                    <div id="linkEncodingForm" class="encoding-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="linkUrl">Enter URL:</label>
+                            <input type="url" id="linkUrl" name="linkUrl" placeholder="https://example.com">
+                        </div>
+                    </div>
+                    
+                    <!-- Video Encoding Form -->
+                    <div id="videoEncodingForm" class="encoding-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="videoUpload">Select a video file to encode:</label>
+                            <input type="file" id="videoUpload" name="videoUpload" accept="video/*">
+                        </div>
+                    </div>
+                    
+                    <!-- APK Encoding Form -->
+                    <div id="apkEncodingForm" class="encoding-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="apkUpload">Select an APK file to encode:</label>
+                            <input type="file" id="apkUpload" name="apkUpload" accept=".apk">
+                        </div>
+                    </div>
+                    
+                    <!-- Malware Encoding Form -->
+                    <div id="malwareEncodingForm" class="encoding-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="malwareUpload">Select a file to encode:</label>
+                            <input type="file" id="malwareUpload" name="malwareUpload">
+                        </div>
+                        <div class="alert warning">
+                            <p>Warning: Encoding malware or harmful content is for educational purposes only. Use responsibly and legally.</p>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <button type="submit" class="btn primary">Encode Message</button>
+                        <button type="submit" class="btn primary" id="encodeButton" disabled>Encode</button>
                     </div>
                 </form>
             </section>
