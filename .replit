@@ -1,0 +1,33 @@
+modules = ["java", "openjdk-17"]
+
+[nix]
+channel = "stable-24_05"
+packages = ["maven"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Java Steganography Web App"
+
+[[workflows.workflow]]
+name = "Java Steganography Web App"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "nix-shell -p openjdk17 --run \"mkdir -p temp && mvn clean package && java -jar target/dependency/webapp-runner.jar --port 5000 target/*.war\""
+waitForPort = 5000
+
+[deployment]
+run = ["sh", "-c", "nix-shell -p openjdk17 --run \"mkdir -p temp && mvn clean package && java -jar target/dependency/webapp-runner.jar --port 5000 target/*.war\""]
+
+[[ports]]
+localPort = 5000
+externalPort = 80
