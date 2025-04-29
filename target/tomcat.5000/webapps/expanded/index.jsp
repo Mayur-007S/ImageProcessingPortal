@@ -14,6 +14,13 @@
             <p>Hide text or links within your images</p>
         </header>
         
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.jsp" class="active">Encode</a></li>
+                <li><a href="decode.jsp">Decode</a></li>
+            </ul>
+        </nav>
+        
         <main>
             <section class="card">
                 <h2>Step 1: Upload an Image</h2>

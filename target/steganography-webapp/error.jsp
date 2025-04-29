@@ -11,25 +11,33 @@
     <div class="container">
         <header>
             <h1>Error Occurred</h1>
-            <p>Something went wrong with the steganography process</p>
+            <p>Something went wrong with your request</p>
         </header>
         
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.jsp">Encode</a></li>
+                <li><a href="decode.jsp">Decode</a></li>
+            </ul>
+        </nav>
+        
         <main>
-            <section class="card error-card">
+            <section class="card">
                 <h2>Error Details</h2>
-                
                 <div class="alert error">
                     <% 
                         String errorMessage = (String) request.getAttribute("errorMessage");
-                        if (errorMessage == null) {
-                            errorMessage = "An unexpected error occurred.";
+                        if (errorMessage != null && !errorMessage.isEmpty()) {
+                            out.println("<p>" + errorMessage + "</p>");
+                        } else {
+                            out.println("<p>An unknown error occurred. Please try again.</p>");
                         }
                     %>
-                    <p><%= errorMessage %></p>
                 </div>
                 
                 <div class="actions">
-                    <a href="index.jsp" class="btn primary">Return to Homepage</a>
+                    <a href="javascript:history.back()" class="btn secondary">Go Back</a>
+                    <a href="index.jsp" class="btn primary">Go to Homepage</a>
                 </div>
             </section>
         </main>

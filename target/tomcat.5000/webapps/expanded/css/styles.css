@@ -38,6 +38,42 @@ header p {
     font-size: 1.1rem;
 }
 
+/* Navigation Styles */
+.main-nav {
+    margin-bottom: 2rem;
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    background-color: #f1f1f1;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.main-nav li {
+    flex: 1;
+}
+
+.main-nav a {
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.main-nav a:hover {
+    background-color: #e0e0e0;
+}
+
+.main-nav a.active {
+    background-color: #3498db;
+    color: white;
+}
+
 /* Card Styles */
 .card {
     background-color: white;

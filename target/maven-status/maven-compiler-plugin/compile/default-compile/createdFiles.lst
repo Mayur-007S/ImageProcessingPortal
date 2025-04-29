@@ -2,4 +2,5 @@ com/steganography/controller/DownloadServlet.class
 com/steganography/controller/EncodeServlet.class
 com/steganography/controller/UploadServlet.class
 com/steganography/model/Steganography.class
+com/steganography/controller/DecodeServlet.class
 com/steganography/model/ImageProcessor.class
