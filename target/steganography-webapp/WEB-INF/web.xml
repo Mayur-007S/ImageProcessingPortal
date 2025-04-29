@@ -49,6 +49,21 @@
         <url-pattern>/download</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>DecodeServlet</servlet-name>
+        <servlet-class>com.steganography.controller.DecodeServlet</servlet-class>
+        <multipart-config>
+            <max-file-size>10485760</max-file-size>
+            <max-request-size>52428800</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>DecodeServlet</servlet-name>
+        <url-pattern>/decode</url-pattern>
+    </servlet-mapping>
+    
     <error-page>
         <error-code>404</error-code>
         <location>/error.jsp</location>

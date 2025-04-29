@@ -237,6 +237,70 @@ textarea:focus {
     border: 1px solid #ffeeba;
 }
 
+/* Decode Result Styles */
+.decoded-content {
+    margin-bottom: 2rem;
+}
+
+.content-box {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.text-box {
+    font-family: monospace;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.link-box a {
+    color: #3498db;
+    word-break: break-all;
+}
+
+.file-box {
+    background-color: #f1f7ff;
+    border-color: #d0e3ff;
+}
+
+.form-note {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.info-card {
+    background-color: #f8f9fa;
+}
+
+.info-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-item {
+    flex: 1;
+    min-width: 200px;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.info-item h3 {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
 /* Error Page Styles */
 .error-card {
     text-align: center;
