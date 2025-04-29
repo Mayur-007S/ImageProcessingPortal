@@ -17,9 +17,9 @@
         
         <nav class="main-nav">
             <ul>
-                <li><a href="index.jsp">Home</a></li>
-                <li><a href="encode-page.jsp">Encode</a></li>
-                <li><a href="decode.jsp" class="active">Decode</a></li>
+                <li><a href="index.jsp"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="encode-page.jsp"><i class="fas fa-lock"></i> Encode</a></li>
+                <li><a href="decode.jsp" class="active"><i class="fas fa-unlock-alt"></i> Decode</a></li>
             </ul>
         </nav>
         
@@ -63,6 +63,9 @@
                                 <p><strong><i class="fas fa-file"></i> File Reference:</strong> <%= fileName != null ? fileName : "Unknown file" %></p>
                                 <div class="alert info">
                                     <p><i class="fas fa-info-circle"></i> This is a reference to a file that was encoded in the image.</p>
+                                </div>
+                                <div class="download-section">
+                                    <a href="<%= request.getContextPath() %>/temp/<%= fileName %>" class="btn success" download><i class="fas fa-download"></i> Download File</a>
                                 </div>
                             </div>
                         <% } else { %>

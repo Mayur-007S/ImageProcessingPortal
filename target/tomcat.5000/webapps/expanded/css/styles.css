@@ -84,21 +84,25 @@ header p {
 
 /* Navigation Styles */
 .main-nav {
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 10;
 }
 
 .main-nav ul {
     display: flex;
     list-style: none;
-    background-color: #f8f9fa;
-    border-radius: 12px;
+    background: linear-gradient(145deg, #ffffff, #f0f4f8);
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
-    border: 1px solid #e9ecef;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    padding: 5px;
 }
 
 .main-nav li {
     flex: 1;
+    margin: 0 5px;
 }
 
 .main-nav a {
@@ -106,30 +110,54 @@ header p {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 1.2rem;
+    padding: 1.1rem;
     text-decoration: none;
     color: #2c3e50;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.3px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 1;
 }
 
 .main-nav a:before {
     content: '';
     position: absolute;
     width: 0;
-    height: 3px;
+    height: 5px;
     bottom: 0;
     left: 50%;
     background-color: #3498db;
     transform: translateX(-50%);
     transition: width 0.3s ease;
+    z-index: -1;
+}
+
+.main-nav a:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(52, 152, 219, 0.05);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    z-index: -1;
 }
 
 .main-nav a:hover {
-    background-color: #f1f1f1;
     color: #3498db;
+    transform: translateY(-2px);
+}
+
+.main-nav a:hover:after {
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
 .main-nav a:hover:before {
@@ -139,11 +167,17 @@ header p {
 .main-nav a.active {
     background-color: #3498db;
     color: white;
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
 }
 
 .main-nav a.active:before {
     width: 70%;
     background-color: white;
+}
+
+.main-nav i {
+    margin-right: 8px;
+    font-size: 1.2rem;
 }
 
 /* Feature Buttons */

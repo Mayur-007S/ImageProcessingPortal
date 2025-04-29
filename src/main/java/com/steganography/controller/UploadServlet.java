@@ -51,9 +51,9 @@ public class UploadServlet extends HttpServlet {
             // Store the file in session to be used by the encode servlet
             request.getSession().setAttribute("imagePart", filePart);
             
-            // Redirect to index page with success message
-            request.getSession().setAttribute("uploadSuccess", "Image uploaded successfully. Enter text to encode.");
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            // Redirect to encode page with success message
+            request.getSession().setAttribute("uploadSuccess", "Image uploaded successfully. You can now select an encoding type.");
+            response.sendRedirect(request.getContextPath() + "/encode-page.jsp");
             
         } catch (Exception e) {
             request.setAttribute("errorMessage", "Error uploading file: " + e.getMessage());

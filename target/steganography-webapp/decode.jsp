@@ -17,9 +17,9 @@
         
         <nav class="main-nav">
             <ul>
-                <li><a href="index.jsp">Home</a></li>
-                <li><a href="encode-page.jsp">Encode</a></li>
-                <li><a href="decode.jsp" class="active">Decode</a></li>
+                <li><a href="index.jsp"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="encode-page.jsp"><i class="fas fa-lock"></i> Encode</a></li>
+                <li><a href="decode.jsp" class="active"><i class="fas fa-unlock-alt"></i> Decode</a></li>
             </ul>
         </nav>
         
