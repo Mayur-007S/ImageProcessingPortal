@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Decode Results - Steganography Tool</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -16,8 +17,9 @@
         
         <nav class="main-nav">
             <ul>
-                <li><a href="index.jsp">Encode</a></li>
-                <li><a href="decode.jsp">Decode</a></li>
+                <li><a href="index.jsp">Home</a></li>
+                <li><a href="encode-page.jsp">Encode</a></li>
+                <li><a href="decode.jsp" class="active">Decode</a></li>
             </ul>
         </nav>
         
@@ -34,25 +36,33 @@
             %>
             
             <section class="card">
-                <h2>Decoded Content</h2>
+                <h2><i class="fas fa-unlock-alt"></i> Decoded Content</h2>
                 
                 <div class="result-info">
                     <div class="decoded-content">
-                        <h3>Hidden Content Found</h3>
-                        <p><strong>Content Type:</strong> <%= contentType.substring(0, 1).toUpperCase() + contentType.substring(1) %></p>
+                        <h3><i class="fas fa-search-plus"></i> Hidden Content Found</h3>
+                        <p><strong>Content Type:</strong> 
+                            <% if ("text".equals(contentType)) { %>
+                                <span class="badge text"><i class="fas fa-font"></i> Text</span>
+                            <% } else if ("link".equals(contentType)) { %>
+                                <span class="badge link"><i class="fas fa-link"></i> Link</span>
+                            <% } else if ("file".equals(contentType)) { %>
+                                <span class="badge file"><i class="fas fa-file"></i> File</span>
+                            <% } %>
+                        </p>
                         
                         <% if ("link".equals(contentType)) { %>
                             <div class="content-box link-box">
-                                <p><strong>URL:</strong> <a href="<%= decodedContent %>" target="_blank"><%= decodedContent %></a></p>
+                                <p><strong><i class="fas fa-link"></i> URL:</strong> <a href="<%= decodedContent %>" target="_blank"><%= decodedContent %></a></p>
                                 <div class="alert info">
-                                    <p>This is a clickable link that was hidden in the image.</p>
+                                    <p><i class="fas fa-info-circle"></i> This is a clickable link that was hidden in the image.</p>
                                 </div>
                             </div>
                         <% } else if ("file".equals(contentType)) { %>
                             <div class="content-box file-box">
-                                <p><strong>File Reference:</strong> <%= fileName != null ? fileName : "Unknown file" %></p>
+                                <p><strong><i class="fas fa-file"></i> File Reference:</strong> <%= fileName != null ? fileName : "Unknown file" %></p>
                                 <div class="alert info">
-                                    <p>This is a reference to a file that was encoded in the image.</p>
+                                    <p><i class="fas fa-info-circle"></i> This is a reference to a file that was encoded in the image.</p>
                                 </div>
                             </div>
                         <% } else { %>
@@ -66,8 +76,9 @@
                 </div>
                 
                 <div class="actions">
-                    <a href="decode.jsp" class="btn primary">Decode Another Image</a>
-                    <a href="index.jsp" class="btn secondary">Go to Encoder</a>
+                    <a href="decode.jsp" class="btn primary"><i class="fas fa-redo"></i> Decode Another Image</a>
+                    <a href="encode-page.jsp" class="btn secondary"><i class="fas fa-lock"></i> Go to Encoder</a>
+                    <a href="index.jsp" class="btn secondary"><i class="fas fa-home"></i> Back to Home</a>
                 </div>
             </section>
         </main>
