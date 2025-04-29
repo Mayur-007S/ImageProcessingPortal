@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const uploadSuccess = document.querySelector('.alert.success');
         const encodeForm = document.getElementById('encodeForm');
         
+        // Only proceed if encodeForm exists on the page
+        if (!encodeForm) return;
+        
         if (uploadSuccess) {
             // Enable encode form if image is uploaded
             encodeForm.classList.add('active');
@@ -21,33 +24,38 @@ document.addEventListener('DOMContentLoaded', function() {
             // Disable encode form if no image is uploaded
             const encodingTypeSelect = document.getElementById('encodingType');
             const encodeButton = document.getElementById('encodeButton');
-            const allInputs = encodeForm.querySelectorAll('input, textarea, select');
             
-            if (encodingTypeSelect) {
-                encodingTypeSelect.disabled = true;
+            if (encodeForm) {
+                const allInputs = encodeForm.querySelectorAll('input, textarea, select');
+                
+                if (encodingTypeSelect) {
+                    encodingTypeSelect.disabled = true;
+                }
+                
+                if (encodeButton) {
+                    encodeButton.disabled = true;
+                    encodeButton.title = "Please upload an image first";
+                }
+                
+                if (allInputs) {
+                    allInputs.forEach(input => {
+                        input.disabled = true;
+                    });
+                }
+                
+                // Add info message
+                const infoMessage = document.createElement('div');
+                infoMessage.className = 'alert info';
+                infoMessage.textContent = 'Please upload an image first before encoding data.';
+                
+                // Remove existing info message if present
+                const existingInfo = encodeForm.querySelector('.alert.info');
+                if (existingInfo) {
+                    existingInfo.remove();
+                }
+                
+                encodeForm.prepend(infoMessage);
             }
-            
-            if (encodeButton) {
-                encodeButton.disabled = true;
-                encodeButton.title = "Please upload an image first";
-            }
-            
-            allInputs.forEach(input => {
-                input.disabled = true;
-            });
-            
-            // Add info message
-            const infoMessage = document.createElement('div');
-            infoMessage.className = 'alert info';
-            infoMessage.textContent = 'Please upload an image first before encoding data.';
-            
-            // Remove existing info message if present
-            const existingInfo = encodeForm.querySelector('.alert.info');
-            if (existingInfo) {
-                existingInfo.remove();
-            }
-            
-            encodeForm.prepend(infoMessage);
         }
     }
     
@@ -55,22 +63,28 @@ document.addEventListener('DOMContentLoaded', function() {
     window.showEncodingForm = function() {
         // Get all form divs
         const encodingForms = document.querySelectorAll('.encoding-form');
-        const encodingType = document.getElementById('encodingType').value;
+        const encodingTypeElement = document.getElementById('encodingType');
+        
+        if (!encodingTypeElement) return; // Exit if element doesn't exist
+        
+        const encodingType = encodingTypeElement.value;
         const encodeButton = document.getElementById('encodeButton');
         
         // Hide all forms first
-        encodingForms.forEach(form => {
-            form.style.display = 'none';
-        });
+        if (encodingForms && encodingForms.length > 0) {
+            encodingForms.forEach(form => {
+                form.style.display = 'none';
+            });
+        }
         
         // Show the selected form if a type is selected
         if (encodingType) {
             const selectedForm = document.getElementById(encodingType + 'EncodingForm');
-            if (selectedForm) {
+            if (selectedForm && encodeButton) {
                 selectedForm.style.display = 'block';
                 encodeButton.disabled = false;
             }
-        } else {
+        } else if (encodeButton) {
             encodeButton.disabled = true;
         }
     }
