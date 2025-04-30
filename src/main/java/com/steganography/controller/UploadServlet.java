@@ -43,7 +43,25 @@ public class UploadServlet extends HttpServlet {
             // Validate file is an image
             String contentType = filePart.getContentType();
             if (!contentType.startsWith("image/")) {
-                request.setAttribute("errorMessage", "Only image files are allowed.");
+                request.setAttribute("errorMessage", "Only image files are allowed. Your file type was: " + contentType);
+                request.getRequestDispatcher("/error.jsp").forward(request, response);
+                return;
+            }
+            
+            // Ensure the image is of a supported format (png, jpg, jpeg, gif, bmp)
+            String fileName = getSubmittedFileName(filePart);
+            
+            // Check if filename contains an extension
+            if (!fileName.contains(".")) {
+                request.setAttribute("errorMessage", "Image file missing extension. Please use PNG, JPG, JPEG, GIF, or BMP formats.");
+                request.getRequestDispatcher("/error.jsp").forward(request, response);
+                return;
+            }
+            
+            String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+            if (!isValidImageFormat(fileExtension)) {
+                request.setAttribute("errorMessage", "Unsupported image format: " + fileExtension + 
+                    ". Please use PNG, JPG, JPEG, GIF, or BMP formats.");
                 request.getRequestDispatcher("/error.jsp").forward(request, response);
                 return;
             }
@@ -56,8 +74,43 @@ public class UploadServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/encode-page.jsp");
             
         } catch (Exception e) {
-            request.setAttribute("errorMessage", "Error uploading file: " + e.getMessage());
+            // Log the error for server-side debugging
+            e.printStackTrace();
+            
+            // Provide user-friendly error message
+            String errorMsg = "Error uploading file: " + e.getMessage();
+            request.setAttribute("errorMessage", errorMsg);
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
+    }
+    
+    // Helper method to get the submitted filename from a Part
+    private String getSubmittedFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String item : items) {
+            if (item.trim().startsWith("filename")) {
+                return item.substring(item.indexOf("=") + 2, item.length() - 1);
+            }
+        }
+        return "unknown_file";
+    }
+    
+    // Helper method to validate image format
+    private boolean isValidImageFormat(String extension) {
+        if (extension == null || extension.isEmpty()) {
+            return false;
+        }
+        
+        // List of supported image formats by ImageIO
+        String[] supportedFormats = {"png", "jpg", "jpeg", "gif", "bmp"};
+        
+        for (String format : supportedFormats) {
+            if (extension.equalsIgnoreCase(format)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

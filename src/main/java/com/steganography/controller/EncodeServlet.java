@@ -130,7 +130,18 @@ public class EncodeServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/result.jsp");
             
         } catch (Exception e) {
-            request.setAttribute("errorMessage", "Error encoding content: " + e.getMessage());
+            // Log the error for server-side debugging
+            e.printStackTrace();
+            
+            // Provide user-friendly error message
+            String errorMsg = "Error encoding content: " + e.getMessage();
+            
+            // Add more detailed information for specific error types
+            if (e.getMessage() != null && e.getMessage().contains("Failed to read image")) {
+                errorMsg += ". Please ensure you are uploading a valid image file (JPG, PNG, GIF, BMP) and try again.";
+            }
+            
+            request.setAttribute("errorMessage", errorMsg);
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }

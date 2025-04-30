@@ -29,10 +29,10 @@
                 <form action="upload" method="post" enctype="multipart/form-data" id="uploadForm">
                     <div class="form-group">
                         <label for="image">Select an image file:</label>
-                        <input type="file" id="image" name="image" accept="image/*" required>
+                        <input type="file" id="image" name="image" accept="image/png, image/jpeg, image/gif, image/bmp" required>
                     </div>
                     <div class="form-note">
-                        <p>Choose a high-quality image with complex patterns for better steganography results. Supported formats: PNG, JPG, JPEG.</p>
+                        <p>Choose a high-quality image with complex patterns for better steganography results. <strong>Supported formats: PNG, JPG, JPEG, GIF, BMP only.</strong> Other image formats or corrupted files may cause errors.</p>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn primary"><i class="fas fa-upload"></i> Upload Image</button>
