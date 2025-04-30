@@ -26,7 +26,11 @@ args = "nix-shell -p openjdk17 --run \"mkdir -p temp && mvn clean package && jav
 waitForPort = 5000
 
 [deployment]
-run = ["sh", "-c", "nix-shell -p openjdk17 --run \"mkdir -p temp && mvn clean package && java -jar target/dependency/webapp-runner.jar --port 5000 target/*.war\""]
+run = [
+  "sh",
+  "-c",
+  "nix-shell -p openjdk17 --run \"mkdir -p temp && mvn clean package && java -jar target/dependency/webapp-runner.jar --port 5000 target/*.war\"",
+]
 
 [[ports]]
 localPort = 5000
